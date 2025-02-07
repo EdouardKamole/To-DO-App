@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:first_flutter_step/pages/first_page.dart';
 
-void main() {
+void main() async {
+  // Ensure Flutter binding is initialized before async operations
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Hive
+  await Hive.initFlutter();
+
+  // Open the Hive box
+  await Hive.openBox("myBox");
+
   runApp(const MyApp());
 }
 

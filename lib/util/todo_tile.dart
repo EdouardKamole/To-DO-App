@@ -5,59 +5,42 @@ class TodoTile extends StatelessWidget {
   final String taskName;
   final bool taskCompleted;
   final Function(bool?)? onChanged;
-  final Function(BuildContext)? deleteFunction; // ✅ Fixed constructor issue
+  final Function(BuildContext)? deleteFunction; // Fixed issue
 
   TodoTile({
     super.key,
     required this.taskName,
     required this.taskCompleted,
     required this.onChanged,
-    required this.deleteFunction, // ✅ Marked as required
+    required this.deleteFunction, // Fixed issue
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.all(25),
       child: Slidable(
         endActionPane: ActionPane(
-          motion: const StretchMotion(), // ✅ Smooth animation when sliding
+          motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) =>
-                  deleteFunction!(context), // ✅ Calls deleteFunction
+              onPressed: deleteFunction,
               icon: Icons.delete,
-              label: 'Delete',
-              backgroundColor: Colors.red.shade400,
-              foregroundColor: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
+              backgroundColor: Colors.red.shade300,
+            )
           ],
         ),
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.yellow.shade100,
+            color: Colors.yellow,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Row(
             children: [
-              Checkbox(
-                value: taskCompleted,
-                onChanged: onChanged,
-                activeColor: Colors.green,
-              ),
+              Checkbox(value: taskCompleted, onChanged: onChanged),
               const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  taskName,
-                  style: TextStyle(
-                    fontSize: 16,
-                    decoration:
-                        taskCompleted ? TextDecoration.lineThrough : null,
-                  ),
-                ),
-              ),
+              Text(taskName),
             ],
           ),
         ),
